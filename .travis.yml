@@ -14,7 +14,7 @@ after_success:
   - docker build -t pbuczma/multi-client ./client
   - docker build -t pbuczma/multi-nginx ./nginx
   - docker build -t pbuczma/multi-server ./server
-  - docker builr -t pbuczma/multi-worker ./worker
+  - docker build -t pbuczma/multi-worker ./worker
   - echo "$DOCKER_PWD" | docker login -u "$DOCKER_ID" --password-stdin
   - docker push pbuczma/multi-client
   - docker push pbuczma/multi-nginx
