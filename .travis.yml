@@ -11,7 +11,7 @@ script:
   - docker run -e CI=true pbuczma/docker-test npm run test
 
 after_success:
-  - docker build -t pbuczma/multi-client ./client
+  - docker build -t pbuczma/multi-client:v1 ./client
   - docker build -t pbuczma/multi-nginx ./nginx
   - docker build -t pbuczma/multi-server ./server
   - docker build -t pbuczma/multi-worker ./worker
@@ -20,3 +20,15 @@ after_success:
   - docker push pbuczma/multi-nginx
   - docker push pbuczma/multi-server
   - docker push pbuczma/multi-worker
+
+deploy:
+  provider: elasticbeanstalk
+  region: 'us-east-1'
+  app: 'multi-docker'
+  env: 'MultiDocker-env'
+  bucket_name: 'elasticbeanstalk-us-east-1-923445559289'
+  bucket_path: 'docker-multi'
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
